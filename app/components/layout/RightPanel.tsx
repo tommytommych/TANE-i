@@ -42,7 +42,7 @@ function PanelContent({ activeTab, woodList, tools }: { activeTab: string; woodL
 
   if (activeTab === 'tools') {
     return (
-      <div className="space-y-2 max-h-96 overflow-y-auto pr-1">
+      <div className="space-y-2">
         {tools.map((tool, idx) => (
           <a
             key={idx}
