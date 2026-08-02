@@ -101,7 +101,7 @@ function CompletionCards({
         <span className="text-sm font-bold text-tanei-ink">完成しました！次のアクションを選んでください</span>
       </div>
 
-      <div className={`grid gap-2 ${isCameoContent ? 'grid-cols-4' : 'grid-cols-5'}`}>
+      <div className={`grid gap-2 ${isCameoContent ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-3 sm:grid-cols-5'}`}>
         {cards.map((card) => (
           <button
             key={card.label}

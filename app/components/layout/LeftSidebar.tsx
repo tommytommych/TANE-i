@@ -69,12 +69,12 @@ export default function LeftSidebar({
       )}
 
       <div
-        className={`fixed inset-y-0 left-0 z-40 w-80 bg-tanei-surface-muted border-r border-tanei-border flex flex-col justify-between overflow-y-auto flex-shrink-0 transition-transform duration-300 lg:static lg:z-auto lg:transition-[width] ${
+        className={`fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] bg-tanei-surface-muted border-r border-tanei-border flex flex-col justify-between overflow-y-auto flex-shrink-0 transition-transform duration-300 lg:static lg:z-auto lg:transition-[width] ${
           isOpen ? 'translate-x-0 lg:w-80' : '-translate-x-full lg:w-0'
         }`}
       >
         <div
-          className={`p-5 flex flex-col h-full ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto'} transition-opacity duration-200`}
+          className={`p-4 sm:p-5 flex flex-col h-full ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto'} transition-opacity duration-200`}
         >
           <div className="space-y-4">
             <div className="bg-gradient-to-r from-tanei-brand to-[#A3856A] p-4 rounded-tanei-card shadow-md text-white">

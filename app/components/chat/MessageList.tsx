@@ -38,7 +38,7 @@ function MessageList({
   showToast,
 }: MessageListProps) {
   return (
-    <div className="w-full max-w-none px-4 space-y-4">
+    <div className="w-full max-w-none space-y-4">
       {messages.map((msg, index) => (
         <MessageBubble
           key={index}

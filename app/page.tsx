@@ -442,7 +442,7 @@ export default function Home() {
           onNewConversation={handleNewConversation}
         />
 
-        <div className="flex-1 overflow-y-auto p-5 space-y-4">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-4">
           <MessageList
             messages={messages}
             isLoading={isLoading}

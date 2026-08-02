@@ -31,7 +31,7 @@ const OTHER_ITEMS = [
 // 「写真から相談する」はTANE:i最大の特徴のため、単独の目立つカードとして最上部に配置する
 export default function StartCards({ onSendMessage, onOpenPhotoPicker }: StartCardsProps) {
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 mt-2 mb-6 space-y-3">
+    <div className="w-full max-w-3xl mx-auto mt-2 mb-6 space-y-3">
       <button
         onClick={onOpenPhotoPicker}
         className="w-full text-left bg-gradient-to-r from-tanei-brand to-tanei-accent text-white rounded-tanei-card p-5 shadow-md hover:shadow-lg hover:brightness-105 transition-all flex items-center gap-4"

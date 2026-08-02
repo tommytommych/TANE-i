@@ -161,7 +161,7 @@ export default function RightPanel({ woodList, tools }: RightPanelProps) {
       {/* モバイル用フローティングトリガー */}
       <button
         onClick={() => setIsMobileOpen(true)}
-        className="xl:hidden fixed bottom-24 right-4 z-30 w-12 h-12 rounded-full bg-tanei-brand text-white shadow-lg flex items-center justify-center text-xl"
+        className="xl:hidden fixed bottom-32 right-4 z-30 w-12 h-12 rounded-full bg-tanei-brand text-white shadow-lg flex items-center justify-center text-xl"
         aria-label="木材価格・工具・スポンサー情報を開く"
       >
         🪵

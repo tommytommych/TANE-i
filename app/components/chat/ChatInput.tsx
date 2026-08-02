@@ -30,21 +30,21 @@ export default function ChatInput({
   remainingImageCount,
 }: ChatInputProps) {
   return (
-    <div className="p-5 bg-white border-t border-tanei-border">
+    <div className="p-3 sm:p-5 bg-white border-t border-tanei-border">
       {selectedImage && (
-        <div className="mb-2 flex items-center gap-3 bg-tanei-surface-muted p-2 rounded-tanei-control border border-tanei-border w-fit">
-          <img src={selectedImage} alt="添付写真" className="h-12 w-12 object-cover rounded-lg" />
-          <div className="text-xs">
+        <div className="mb-2 flex items-center gap-3 bg-tanei-surface-muted p-2 rounded-tanei-control border border-tanei-border w-fit max-w-full">
+          <img src={selectedImage} alt="添付写真" className="h-12 w-12 object-cover rounded-lg flex-shrink-0" />
+          <div className="text-xs min-w-0">
             <span className="font-bold text-tanei-ink block">📷 写真を添付中（写真で相談）</span>
-            <span className="text-gray-500">この写真をもとにAIに相談できます</span>
+            <span className="text-gray-500 hidden sm:block">この写真をもとにAIに相談できます</span>
           </div>
-          <button onClick={onClearImage} className="text-xs text-red-500 font-bold ml-4 hover:underline">
+          <button onClick={onClearImage} className="text-xs text-red-500 font-bold ml-2 sm:ml-4 flex-shrink-0 hover:underline">
             取り消し
           </button>
         </div>
       )}
 
-      <div className="w-full max-w-none flex gap-2 items-center">
+      <div className="w-full max-w-none flex gap-1.5 sm:gap-2 items-center">
         <input
           type="file"
           accept="image/*"
@@ -55,7 +55,7 @@ export default function ChatInput({
         />
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="bg-gradient-to-r from-tanei-brand to-tanei-accent text-white px-4 py-3 rounded-tanei-control text-sm font-bold shadow-sm hover:brightness-105 transition-all flex items-center gap-1.5 flex-shrink-0"
+          className="bg-gradient-to-r from-tanei-brand to-tanei-accent text-white px-3 sm:px-4 py-3 rounded-tanei-control text-sm font-bold shadow-sm hover:brightness-105 transition-all flex items-center gap-1.5 flex-shrink-0"
           title="お部屋や置きたい場所の写真をアップロードしてAI空間診断"
           aria-label="写真でAI診断"
         >
@@ -70,13 +70,13 @@ export default function ChatInput({
           onKeyDown={onKeyDown}
           placeholder="例：テレビ台を作りたい、隙間に合う収納棚のサイズは？、など"
           disabled={isLoading}
-          className="flex-1 border border-tanei-border rounded-tanei-control px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-tanei-brand disabled:opacity-50 min-w-0"
+          className="flex-1 border border-tanei-border rounded-tanei-control px-3 sm:px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-tanei-brand disabled:opacity-50 min-w-0"
         />
 
         <button
           onClick={onSend}
           disabled={isLoading}
-          className="bg-tanei-brand text-white px-6 py-3 rounded-tanei-control text-sm font-bold hover:bg-tanei-brand-dark transition-colors disabled:opacity-50 flex-shrink-0"
+          className="bg-tanei-brand text-white px-4 sm:px-6 py-3 rounded-tanei-control text-sm font-bold hover:bg-tanei-brand-dark transition-colors disabled:opacity-50 flex-shrink-0"
         >
           送信
         </button>
@@ -84,11 +84,11 @@ export default function ChatInput({
         <button
           onClick={onOpenGeminiImage}
           disabled={isLoading || remainingImageCount <= 0}
-          className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white shadow-lg shadow-indigo-500/25 px-5 py-3 rounded-tanei-control text-sm font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 flex-shrink-0 flex items-center gap-1.5 border border-white/20"
+          className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white shadow-lg shadow-indigo-500/25 px-3 sm:px-5 py-3 rounded-tanei-control text-sm font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 flex-shrink-0 flex items-center gap-1.5 border border-white/20"
           title="AI完成イメージ生成"
         >
           <span>✨</span>
-          <span>完成イメージ</span>
+          <span className="hidden sm:inline">完成イメージ</span>
         </button>
       </div>
     </div>
