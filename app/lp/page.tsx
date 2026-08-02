@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState, type MouseEvent, type ReactNode } from 'react';
 
@@ -194,11 +195,16 @@ export default function LpPage() {
 
       {/* ================= HERO ================= */}
       <section className="flex min-h-screen flex-col items-center justify-center px-6 pb-20 pt-32 text-center">
-        <PhotoPlaceholder
-          label="写真エリア（後から工房写真を配置）"
-          icon="🏚️"
-          className="mb-14 aspect-[4/3] w-full max-w-4xl rounded-[28px] sm:aspect-[21/9]"
-        />
+        <div className="relative mb-14 aspect-[3/1] w-full max-w-4xl overflow-hidden rounded-[28px] border border-[#1F3028]/10 bg-gradient-to-br from-[#EFE9DC] to-[#E1D9C7] p-4 sm:p-6">
+          <Image
+            src="/images/tomishin-channel-banner.jpg"
+            alt="とみしんチャンネルDIY"
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 900px"
+            className="object-contain"
+          />
+        </div>
 
         <p className="text-[13px] tracking-[0.35em] text-[#7A867C]">Ideas into Reality.</p>
 
