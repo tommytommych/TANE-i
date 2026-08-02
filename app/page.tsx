@@ -193,7 +193,7 @@ export default function Home() {
 
       {/* 左側サイドバー（折りたたみ対応） */}
       <div className={`${isLeftSidebarOpen ? 'w-80' : 'w-0'} bg-[#F4FEF6] border-r border-[#E6DEC9] flex flex-col justify-between overflow-y-auto flex-shrink-0 transition-all duration-300 relative`}>
-        <div className={`p-5 space-y-6 ${isLeftSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} transition-opacity duration-200`}>
+        <div className={`p-6 space-y-6 ${isLeftSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} transition-opacity duration-200`}>
           
           {/* 左上のロゴ */}
           <div className="bg-gradient-to-r from-[#8C6D53] to-[#A3856A] p-4 rounded-2xl shadow-md text-white">
@@ -334,7 +334,7 @@ export default function Home() {
       {/* メインチャット画面 */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* トップバー（サイドバー開閉ボタン付き） */}
-        <div className="h-14 bg-white border-b border-[#E6DEC9] px-4 flex items-center justify-between flex-shrink-0">
+        <div className="h-14 bg-white border-b border-[#E6DEC9] px-6 flex items-center justify-between flex-shrink-0">
           <button
             onClick={() => setIsLeftSidebarOpen(!isLeftSidebarOpen)}
             className="flex items-center gap-2 px-3 py-1.5 bg-[#F4FEF6] border border-[#E6DEC9] rounded-xl text-xs font-bold text-[#5C4B40] hover:bg-[#EBE3D5] transition-colors"
@@ -346,8 +346,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          <div className="w-full max-w-none px-4 space-y-4">
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-4">
+          <div className="w-full max-w-none space-y-4">
             {messages.map((msg, index) => (
               <div key={index} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                 <div className={`max-w-5xl w-full p-4 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-[#8C6D53] text-white ml-auto' : 'bg-white border border-[#E6DEC9] text-[#4A3B32] mr-auto shadow-sm'}`}>
@@ -379,7 +379,7 @@ export default function Home() {
         </div>
 
         {/* 入力エリア */}
-        <div className="p-4 bg-white border-t border-[#E6DEC9] px-6">
+        <div className="px-6 py-4 bg-white border-t border-[#E6DEC9]">
           <div className="w-full max-w-none flex gap-2 items-center">
             <input
               type="text"
@@ -412,7 +412,7 @@ export default function Home() {
       </div>
 
       {/* 右側サイドバー */}
-      <div className="w-80 bg-[#F4FEF6] border-l border-[#E6DEC9] p-5 hidden xl:flex flex-col gap-6 overflow-y-auto flex-shrink-0">
+      <div className="w-80 bg-[#F4FEF6] border-l border-[#E6DEC9] p-6 hidden xl:flex flex-col gap-6 overflow-y-auto flex-shrink-0">
         {/* 木材価格・寸法早見表 */}
         <div>
           <h3 className="text-xs font-bold text-[#5C4B40] uppercase tracking-wider mb-3 flex items-center gap-1.5">
