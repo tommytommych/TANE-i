@@ -77,12 +77,12 @@ function MessageBubble({
   return (
     <div className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
       <div
-        className={`max-w-5xl w-full p-4 rounded-2xl text-sm ${
+        className={`p-4 rounded-2xl text-sm ${
           msg.role === 'user'
-            ? 'bg-tanei-brand text-white ml-auto'
+            ? 'max-w-[80%] bg-tanei-brand text-white ml-auto'
             : msg.isError
-            ? 'bg-orange-50 border border-orange-200 text-tanei-ink mr-auto shadow-sm'
-            : 'bg-white border border-tanei-border text-tanei-ink mr-auto shadow-sm'
+            ? 'max-w-5xl w-full bg-orange-50 border border-orange-200 text-tanei-ink mr-auto shadow-sm'
+            : 'max-w-5xl w-full bg-white border border-tanei-border text-tanei-ink mr-auto shadow-sm'
         }`}
       >
         {imageUrl && (
