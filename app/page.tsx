@@ -38,7 +38,7 @@ const AMAZON_TOOLS = [
 ];
 
 export default function Home() {
-  const [messages, setMessages] = useState<{ role: string; content: string }[]>([
+  const [messages, setMessages] = useState<{ role: string; content: string; isCameoComplete?: boolean }[]>([
     {
       role: 'assistant',
       content: '🌱ようこそ、TANE:iへ。\nあなたの「作りたい」を、一緒にカタチにします。\n作りたいもの、悩んでいることを教えてください😊'
@@ -101,13 +101,13 @@ export default function Home() {
     scrollToBottom();
   }, [messages, isLoading]);
 
-  const sendMessage = async (textToSend: string, countUp: boolean = false) => {
+  const sendMessage = async (textToSend: string, countUp: boolean = false, isCameoDesign: boolean = false) => {
     if (!textToSend.trim() || isLoading) return;
 
     if (textToSend.includes('コーナン') && (textToSend.includes('木材') || textToSend.includes('価格') || textToSend.includes('サイズ') || textToSend.includes('リスト'))) {
       const woodText = KOHNAN_WOOD_LIST.map(w => `■ ${w.name}\n・特徴: ${w.feature}\n・サイズ: ${w.size}\n・長さ: ${w.length}\n・価格目安: ${w.price}\n`).join('\n');
       const replyText = `コーナンで取り扱われている代表的な木材のリストです。\n\n${woodText}\n（※価格は店舗や時期によって前後します。）`;
-      
+
       const newMessages = [...messages, { role: 'user', content: textToSend }, { role: 'assistant', content: replyText }];
       setMessages(newMessages);
       setInput('');
@@ -136,8 +136,8 @@ export default function Home() {
 
       const data = await response.json();
       const replyText = data && data.reply ? data.reply : '回答を受け取れませんでした。';
-      
-      setMessages([...newMessages, { role: 'assistant', content: replyText }]);
+
+      setMessages([...newMessages, { role: 'assistant', content: replyText, isCameoComplete: isCameoDesign }]);
     } catch (error) {
       console.error(error);
       setMessages([...newMessages, { role: 'assistant', content: 'エラーが発生しました。通信環境やサーバーのログをご確認ください。' }]);
@@ -163,6 +163,61 @@ export default function Home() {
 
     setRemainingImageCount((prev) => Math.max(0, prev - 1));
     window.open('https://gemini.google.com/', '_blank');
+  };
+
+  const handleCameoSavePdf = (content: string) => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      showToast('ポップアップがブロックされました。ブラウザの設定をご確認ください。');
+      return;
+    }
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>カメオデザイン - TANE:i</title>
+          <meta charset="utf-8" />
+          <style>
+            body { font-family: sans-serif; white-space: pre-wrap; padding: 24px; line-height: 1.7; color: #4A3B32; }
+          </style>
+        </head>
+        <body>${content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+  };
+
+  const handleCameoLineSend = (content: string) => {
+    const url = `https://line.me/R/msg/text/?${encodeURIComponent(content)}`;
+    window.open(url, '_blank');
+  };
+
+  const handleCameoSaveDesign = (content: string) => {
+    addItem('design', 'カメオデザイン', content);
+    showToast('デザインを保存しました！');
+  };
+
+  const handleCameoShare = async (content: string) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'TANE:i カメオデザイン', text: content });
+      } catch {
+        // ユーザーがキャンセルした場合は何もしない
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(content);
+        showToast('デザイン内容をコピーしました！');
+      } catch {
+        showToast('共有に失敗しました。');
+      }
+    }
+  };
+
+  const handleCameoAmazonSearch = () => {
+    const url = 'https://www.amazon.co.jp/s?k=' + encodeURIComponent('カッティングシート ステッカー 自作');
+    window.open(url, '_blank');
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -267,7 +322,7 @@ export default function Home() {
               <span>🔍</span> 材料の選び方とコツ
             </button>
 
-            <button onClick={() => sendMessage("【カッティングデザインの相談】シルエットカメオ用のステッカーやロゴのデザインアイデアを提案してください。", false)} className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm bg-white hover:bg-[#FAF6F0] text-[#5C4B40] transition-colors w-full text-left">
+            <button onClick={() => sendMessage("【カッティングデザインの相談】シルエットカメオ用のステッカーやロゴのデザインアイデアを提案してください。", false, true)} className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm bg-white hover:bg-[#FAF6F0] text-[#5C4B40] transition-colors w-full text-left">
               <span>✂️</span> シルエットカメオデザイン
             </button>
           </div>
@@ -356,7 +411,20 @@ export default function Home() {
                   </div>
                 </div>
 
-                {msg.role === 'assistant' && index > 0 && (
+                {msg.role === 'assistant' && index > 0 && msg.isCameoComplete && (
+                  <div className="w-full max-w-5xl mt-1 p-4 bg-[#F4FEF6] border border-[#E6DEC9] rounded-2xl">
+                    <div className="text-sm font-bold text-[#5C4B40] mb-3">🎉 完成しました！次のアクションを選んでください</div>
+                    <div className="flex flex-wrap gap-2">
+                      <button onClick={() => handleCameoSavePdf(msg.content)} className="text-xs bg-white hover:bg-[#FAF6F0] border border-[#E6DEC9] text-[#5C4B40] px-3 py-1.5 rounded-md transition-colors font-bold">📄 PDFで保存</button>
+                      <button onClick={() => handleCameoLineSend(msg.content)} className="text-xs bg-white hover:bg-[#FAF6F0] border border-[#E6DEC9] text-[#5C4B40] px-3 py-1.5 rounded-md transition-colors font-bold">💬 LINE送信</button>
+                      <button onClick={() => handleCameoSaveDesign(msg.content)} className="text-xs bg-white hover:bg-[#FAF6F0] border border-[#E6DEC9] text-[#5C4B40] px-3 py-1.5 rounded-md transition-colors font-bold">💾 保存</button>
+                      <button onClick={() => handleCameoShare(msg.content)} className="text-xs bg-white hover:bg-[#FAF6F0] border border-[#E6DEC9] text-[#5C4B40] px-3 py-1.5 rounded-md transition-colors font-bold">🔗 共有</button>
+                      <button onClick={handleCameoAmazonSearch} className="text-xs bg-white hover:bg-[#FAF6F0] border border-[#E6DEC9] text-[#5C4B40] px-3 py-1.5 rounded-md transition-colors font-bold">🛒 Amazon</button>
+                    </div>
+                  </div>
+                )}
+
+                {msg.role === 'assistant' && index > 0 && !msg.isCameoComplete && (
                   <div className="flex gap-2 mt-1 ml-1">
                     <button onClick={() => { addItem('favorite', 'お気に入り回答', msg.content); showToast('お気に入りに保存しました！'); }} className="text-xs bg-[#EBE3D5] hover:bg-[#DDD3C7] text-[#5C4B40] px-2 py-1 rounded-md transition-colors">⭐ お気に入りに追加</button>
                     <button onClick={() => { addItem('design', '保存した設計・アイデア', msg.content); showToast('設計・アイデアとして保存しました！'); }} className="text-xs bg-[#EBE3D5] hover:bg-[#DDD3C7] text-[#5C4B40] px-2 py-1 rounded-md transition-colors">💾 保存する</button>
