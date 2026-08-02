@@ -457,7 +457,7 @@ export default function Home() {
           <h3 className="text-xs font-bold text-[#5C4B40] uppercase tracking-wider mb-3 flex items-center gap-1.5">
             <span>🛒</span> おすすめDIY工具・アイテム
           </h3>
-          <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+          <div className="space-y-2">
             {AMAZON_TOOLS.map((tool, idx) => (
               <a
                 key={idx}
