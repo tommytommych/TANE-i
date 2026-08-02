@@ -8,7 +8,12 @@ interface TopBarProps {
 
 export default function TopBar({ isLeftSidebarOpen, onToggleSidebar, onNewConversation }: TopBarProps) {
   return (
-    <div className="h-14 bg-white border-b border-tanei-border px-5 flex items-center justify-between flex-shrink-0 gap-2">
+    <div className="h-14 bg-white border-b border-tanei-border px-5 flex items-center justify-between flex-shrink-0 gap-2 relative">
+      {/* モバイル時のみ：左右のボタンの間（ヘッダー中央）にTANE:iロゴを表示する */}
+      <div className="sm:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 text-sm font-black text-tanei-brand whitespace-nowrap pointer-events-none">
+        <span>🌱</span> TANE:i
+      </div>
+
       <div className="flex items-center gap-2 min-w-0">
         <button
           onClick={onToggleSidebar}
